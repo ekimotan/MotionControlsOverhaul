@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.1.0</Version>
     <TargetFrameworks>net472;net6</TargetFrameworks>
     <Platforms>x64</Platforms>
     <LangVersion>10.0</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <BuildForWindows>false</BuildForWindows>
     <BuildForWindowsStore>false</BuildForWindowsStore>
     <ModuleId>$(MSBuildProjectName)</ModuleId>
@@ -14,6 +14,7 @@
     <GameFolder>$(BANNERLORD_GAME_DIR)</GameFolder>
     <GameBinariesFolder Condition="Exists('$(GameFolder)\bin\Win64_Shipping_Client\Bannerlord.exe')">Win64_Shipping_Client</GameBinariesFolder>
     <GameBinariesFolder Condition="Exists('$(GameFolder)\bin\Gaming.Desktop.x64_Shipping_Client\Bannerlord.exe')">Gaming.Desktop.x64_Shipping_Client</GameBinariesFolder>
+    <Configurations>Debug;Release;Publish</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(TargetFramework) == 'net472'">
@@ -23,6 +24,12 @@
     <BuildForWindowsStore>false</BuildForWindowsStore>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish|net472|x64'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Publish|net6|x64'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -61,11 +68,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.MCM" Version="5.10.2" IncludeAssets="compile" />
-    <PackageReference Include="Nullable" Version="1.3.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Bannerlord.BuildResources" Version="1.1.0.104" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.Lib.Harmony" Version="2.2.2" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.MCM" Version="5.10.1" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.BuildResources" Version="1.1.0.108" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Harmony.Extensions" Version="3.2.0.77" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="BUTR.Harmony.Analyzer" Version="1.0.1.50" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
