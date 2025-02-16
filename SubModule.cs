@@ -1,27 +1,9 @@
 ﻿using HarmonyLib;
-using SandBox.Missions.MissionLogics;
-using SandBox.View.Map;
-using System.Configuration;
-using TaleWorlds.CampaignSystem;
+
 using TaleWorlds.Core;
-using TaleWorlds.DotNet;
-using TaleWorlds.Engine;
-using TaleWorlds.InputSystem;
-using TaleWorlds.Library;
-using TaleWorlds.Localization;
+
 using TaleWorlds.MountAndBlade;
-using TaleWorlds.MountAndBlade.GauntletUI;
-using TaleWorlds.MountAndBlade.GauntletUI.Mission;
-using TaleWorlds.MountAndBlade.GauntletUI.Widgets.Tutorial;
-using TaleWorlds.MountAndBlade.View.MissionViews;
-using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.GameKeys;
-using TaleWorlds.MountAndBlade.ViewModelCollection.HUD.FormationMarker;
-using TaleWorlds.MountAndBlade.View.Screens;
-using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Base;
-using MCM.Abstractions.Base.Global;
-using System.Xml.Serialization;
-using MotionControlsOverhaul.Config;
+
 
 
 namespace MotionControlsOverhaul{
