@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotionControlsOverhaul", "MotionControlsOverhaul.csproj", "{E9EEB145-B21B-4DD3-95FF-37E4A8844D97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9EEB145-B21B-4DD3-95FF-37E4A8844D97}.Debug|x64.ActiveCfg = Debug|x64
+		{E9EEB145-B21B-4DD3-95FF-37E4A8844D97}.Debug|x64.Build.0 = Debug|x64
+		{E9EEB145-B21B-4DD3-95FF-37E4A8844D97}.Release|x64.ActiveCfg = Release|x64
+		{E9EEB145-B21B-4DD3-95FF-37E4A8844D97}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E87DA929-1B22-4EB5-BD12-9914E4766ED8}
+	EndGlobalSection
+EndGlobal
