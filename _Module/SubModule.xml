@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
+<Module>
   <Id value="$moduleid$" />
   <Name value="$modulename$" />
   <Version value="v$version$" />
@@ -9,7 +8,7 @@
   <ModuleType value="Community" />
   <Url value="$moduleurl$" />
   <DependedModules>
-    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v2.2.2" />
+    <DependedModule Id="Bannerlord.Harmony"/>
     <DependedModule Id="Native" />
     <DependedModule Id="SandBoxCore" />
     <DependedModule Id="Sandbox" />
@@ -39,7 +38,7 @@
   </DependedModuleMetadatas>
   <!-- Community Dependency Metadata -->
   <SubModules>
-	<SubModule>
+   <SubModule>
 		<Name value="MCMv5" />
 		<DLLName value="MCMv5.dll" />
 		<SubModuleClassType value="MCM.MCMSubModule" />
