@@ -34,6 +34,10 @@ namespace MotionControlsOverhaul.Config
         [SettingPropertyGroup("General Settings/Deadzone")]
         public float GyroDeadzone { get; set; } = 0.7f;
 
+        [SettingPropertyBool("Enable Q Helper", Order = 3, RequireRestart = false, HintText = "Enable or disable the feature.")]
+        [SettingPropertyGroup("General Settings/Deadzone")]
+        public bool EnableQHelper { get; set; } = true;
+
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
