@@ -1,8 +1,12 @@
 ﻿using HarmonyLib;
-
+using MotionControlsOverhaul.Config;
+using System.Net.Mail;
 using TaleWorlds.Core;
-
+using TaleWorlds.InputSystem;
+using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.MountAndBlade.View.MissionViews;
+using TaleWorlds.MountAndBlade.View.Screens;
 
 
 
@@ -53,14 +57,106 @@ namespace MotionControlsOverhaul{
 
     public class MotionControllerBehavior : MissionLogic
     {
+        private Agent _mainAgent => Mission.MainAgent;
+        private GameKeyContext _gameAxisKey = HotKeyManager.GetCategory("Generic");
+        private GameKeyContext _keyContext = HotKeyManager.GetCategory("CombatHotKeyCategory");
+        private static bool _rStickBinded = true;
+        private IInputContext _inputContext => Mission.InputManager;
+
+        public override void OnMissionScreenPreLoad()
+        {
+            base.OnMissionScreenPreLoad(); 
+        }
+
         public override void OnMissionTick(float dt)
         {
             base.OnMissionTick(dt);
-        
 
+            AlternateFighting();
             
             //AddGyroToLookDirection();
 
+            
+        }
+
+        public void UnbindCameraRStick()
+        {
+            //_keyContext.GetGameKey(9).ControllerKey.ChangeKey(InputKey.Invalid); //unbind Attack
+            //_keyContext.GetGameKey(10).ControllerKey.ChangeKey(InputKey.Invalid); //unbind Defend
+           
+            foreach (var key in  _gameAxisKey.RegisteredGameAxisKeys)
+            {
+                if(key.AxisKey.IsControllerInput && ((key.Id == "CameraAxisX") || (key.Id == "CameraAxisY"))) key.AxisKey.ChangeKey(InputKey.Invalid);
+            }
+            
+            _rStickBinded = false;
+        }
+
+        public void BindCameraRStick()
+        {
+
+            //_keyContext.GetGameKey(9).ControllerKey.ChangeKey(InputKey.Invalid); //bind Attack
+            //_keyContext.GetGameKey(10).ControllerKey.ChangeKey(InputKey.Invalid); //bind Defend
+
+            foreach (var key in _gameAxisKey.RegisteredGameAxisKeys)
+            {
+                if (key.AxisKey.IsControllerInput && ((key.Id == "CameraAxisX") || (key.Id == "CameraAxisY"))) key.AxisKey.ChangeKey(key.DefaultAxisKey.InputKey);
+            }
+
+            _rStickBinded = true;
+        }
+
+        public void AlternateFighting()
+        {
+            if (!MCOSettings.Instance.AlternateFighting) 
+            { 
+                if (!_rStickBinded) BindCameraRStick();
+                return; 
+            }
+            if (_rStickBinded) UnbindCameraRStick();    
+            //if (_inputContext.GetKeyState(InputKey.ControllerRTrigger).x > 0.2f)
+            //{
+            //    InformationManager.DisplayMessage(new InformationMessage("Rtrigger"));
+            //    switch (Input.GetFirstKeyDownInRange(236))
+            //    {
+                    
+            //        case 236:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackUp; 
+            //            break;
+            //        case 237:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackDown;
+            //            break;
+            //        case 238:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackLeft;
+                     
+            //            break;
+            //        case 239:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackRight;
+            //            break;
+            //    }
+            //}
+
+            //if (_inputContext.GetKeyState(InputKey.ControllerLTrigger).x > 0.2f)
+            //{
+            //    switch (Input.GetFirstKeyDownInRange(236))
+            //    {
+
+            //        case 236:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.DefendUp;
+            //            break;
+            //        case 237:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.DefendDown;
+            //            break;
+            //        case 238:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.DefendLeft;
+            //            break;
+            //        case 239:
+            //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.DefendRight;
+            //            break;
+            //    }
+            //    Game.Current?.EventManager.TriggerEvent(new MissionPlayerMovementFlagsChangeEvent(_mainAgent.MovementFlags));
+            //}
+            
 
         }
 
