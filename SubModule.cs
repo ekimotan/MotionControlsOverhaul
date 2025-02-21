@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 using MotionControlsOverhaul.Config;
-using System.Net.Mail;
+using System.Runtime.InteropServices;
 using TaleWorlds.Core;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
@@ -10,8 +10,10 @@ using TaleWorlds.MountAndBlade.View.Screens;
 
 
 
-namespace MotionControlsOverhaul{
-   
+
+namespace MotionControlsOverhaul
+{
+
 
     public class SubModule : MBSubModuleBase
     {
@@ -52,22 +54,34 @@ namespace MotionControlsOverhaul{
 
 
     }
-    
-    
+
+
+
 
     public class MotionControllerBehavior : MissionLogic
     {
+        
+        
+        
+
+
+        
+
         private Agent _mainAgent => Mission.MainAgent;
         private GameKeyContext _gameAxisKey = HotKeyManager.GetCategory("Generic");
+        private GameKeyContext _keyContextGeneric = HotKeyManager.GetCategory("Generic");
+
         private GameKeyContext _keyContext = HotKeyManager.GetCategory("CombatHotKeyCategory");
         private static bool _rStickBinded = true;
+        private static InputKey _controllerRStick;
         private IInputContext _inputContext => Mission.InputManager;
 
-        public override void OnMissionScreenPreLoad()
-        {
-            base.OnMissionScreenPreLoad(); 
-        }
 
+        public override void EarlyStart()
+        {
+            base.EarlyStart();
+            _keyContext.GetGameKey(25).ControllerKey.ChangeKey(InputKey.Invalid);
+        }
         public override void OnMissionTick(float dt)
         {
             base.OnMissionTick(dt);
@@ -78,7 +92,12 @@ namespace MotionControlsOverhaul{
 
             
         }
-
+        public override void OnMissionStateFinalized()
+        {
+            base.OnMissionStateFinalized();
+            BindCameraRStick();
+        }
+      
         public void UnbindCameraRStick()
         {
             //_keyContext.GetGameKey(9).ControllerKey.ChangeKey(InputKey.Invalid); //unbind Attack
@@ -86,7 +105,13 @@ namespace MotionControlsOverhaul{
            
             foreach (var key in  _gameAxisKey.RegisteredGameAxisKeys)
             {
-                if(key.AxisKey.IsControllerInput && ((key.Id == "CameraAxisX") || (key.Id == "CameraAxisY"))) key.AxisKey.ChangeKey(InputKey.Invalid);
+                if(key.AxisKey.IsControllerInput && ((key.Id == "CameraAxisX") || (key.Id == "CameraAxisY")))
+                {
+                    _controllerRStick = key.AxisKey.InputKey;
+
+                    key.AxisKey.ChangeKey(InputKey.Invalid);
+                }
+                    
             }
             
             _rStickBinded = false;
@@ -94,16 +119,17 @@ namespace MotionControlsOverhaul{
 
         public void BindCameraRStick()
         {
-
+            
             //_keyContext.GetGameKey(9).ControllerKey.ChangeKey(InputKey.Invalid); //bind Attack
             //_keyContext.GetGameKey(10).ControllerKey.ChangeKey(InputKey.Invalid); //bind Defend
 
+            
             foreach (var key in _gameAxisKey.RegisteredGameAxisKeys)
             {
-                if (key.AxisKey.IsControllerInput && ((key.Id == "CameraAxisX") || (key.Id == "CameraAxisY"))) key.AxisKey.ChangeKey(key.DefaultAxisKey.InputKey);
+                if (((key.Id == "CameraAxisX") || (key.Id == "CameraAxisY")) && (key.AxisKey.InputKey == InputKey.Invalid)) key.AxisKey.ChangeKey(_controllerRStick);
             }
-
             _rStickBinded = true;
+            
         }
 
         public void AlternateFighting()
@@ -113,13 +139,38 @@ namespace MotionControlsOverhaul{
                 if (!_rStickBinded) BindCameraRStick();
                 return; 
             }
-            if (_rStickBinded) UnbindCameraRStick();    
+            if (_rStickBinded) UnbindCameraRStick();
+
+
+            if (Input.IsKeyDown(InputKey.ControllerLLeft))
+            {
+               
+            }
+            if (Input.IsKeyReleased(InputKey.ControllerLLeft))
+            {
+
+                
+
+            }
+
+
+
+            if (Input.GetKeyState(InputKey.ControllerRTrigger).x>0.99f)
+            {
+                
+            }
+            if (Input.IsKeyReleased(InputKey.ControllerRTrigger))
+            {
+
+                
+
+            }
             //if (_inputContext.GetKeyState(InputKey.ControllerRTrigger).x > 0.2f)
             //{
             //    InformationManager.DisplayMessage(new InformationMessage("Rtrigger"));
             //    switch (Input.GetFirstKeyDownInRange(236))
             //    {
-                    
+
             //        case 236:
             //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackUp; 
             //            break;
@@ -128,7 +179,7 @@ namespace MotionControlsOverhaul{
             //            break;
             //        case 238:
             //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackLeft;
-                     
+
             //            break;
             //        case 239:
             //            _mainAgent.MovementFlags |= Agent.MovementControlFlag.AttackRight;
@@ -156,7 +207,7 @@ namespace MotionControlsOverhaul{
             //    }
             //    Game.Current?.EventManager.TriggerEvent(new MissionPlayerMovementFlagsChangeEvent(_mainAgent.MovementFlags));
             //}
-            
+
 
         }
 
